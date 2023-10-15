@@ -101,7 +101,7 @@ function firmware_info() {
 		awk '{print "   " NR ".  " $0}' ${firmware_list_m}
 		local rows=$(cat ${firmware_list_m} | wc -l)
 		while :; do
-			read -t 30 -p "请输入要选择的OpenWrt固件[默认1]：" num || echo
+			read -p "请输入要选择的OpenWrt固件[默认1]：" num || echo
 			num=${num:-1}
 			local tmp_num=`echo ${num} | sed 's/[0-9]//g'`
 			if [[ ! -z ${tmp_num} ]]; then
@@ -183,7 +183,7 @@ function firmware_upgrade() {
 	elif [[ "${LOCAL_COMPILE_DATE}" -gt "${CLOUD_COMPILE_DATE}" ]]; then
 		echo "$(date +'%Y-%m-%d %H:%M:%S') 云端最高版本固件,低于您现在所安装的版本,请到云端查看原因!" >> ${AUTOUPDATE_LOG}
 		echo "云端最高版本固件,低于您现在所安装的版本!"
-		read -t 20 -p "确定要更新到此固件吗[f/F强制升级,其它退出升级]：" force_update || echo
+		read -t 60 -p "确定要更新到此固件吗[f/F强制升级,其它退出升级]：" force_update || echo
 		case ${force_update} in
 		f|F)
 			echo
