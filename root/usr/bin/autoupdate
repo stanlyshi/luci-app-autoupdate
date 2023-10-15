@@ -81,7 +81,7 @@ function firmware_info() {
 	
 	local firmware_list_m="${DOWNLOAD_PATH}/firmware_list_m"
 	local firmware_list_s="${DOWNLOAD_PATH}/firmware_list_s"
-	# 18.06-lede-x86-64-202310062251-uefi-bc5ccc.img.gz
+	# lede-18.06-x86-64-202310062251-uefi-bc5ccc.img.gz
 	FIRMWARE_LIST_M=$(grep -E "\"name\"" ${DOWNLOAD_PATH}/${GITHUB_API} | grep -i -Eo ".*${TARGET_PROFILE}.*${FIRMWARE_EXT}" | grep -i -E "${BOOT_TYPE}" | sed "s/ //g" | sed "s/\"//g" | awk -F ':' '{print $2;}' | sort -r)
 	FIRMWARE_LIST_S=$(echo "${FIRMWARE_LIST_M}" | grep -i -E "${SOURCE}" | grep -i -E "${LUCI_EDITION}")
 	echo "${FIRMWARE_LIST_M}" > ${firmware_list_m}
@@ -114,7 +114,7 @@ function firmware_info() {
 	
 	# 202310011845
 	CLOUD_COMPILE_DATE=$(echo "${CLOUD_FIRMWARE_FILENAME}" | sed "s/.*${TARGET_PROFILE}//g" | sed "s/${BOOT_TYPE}.*//g" | grep -Eo [0-9]+)
-	CLOUD_FIRMWARE="${LUCI_EDITION}-${SOURCE}-${TARGET_PROFILE}-${CLOUD_COMPILE_DATE}"
+	CLOUD_FIRMWARE=$(echo ${CLOUD_FIRMWARE_FILENAME} | sed "s/\(.*\)-${BOOT_TYPE}.*/\1/")
 	if [[ -n "${CLOUD_FIRMWARE_FILENAME}" ]] && [[ -n "${CLOUD_COMPILE_DATE}" ]] && [[ -n "${CLOUD_FIRMWARE}" ]]; then
 		echo "获取云端信息成功."
 		echo "$(date +'%Y-%m-%d %H:%M:%S') 获取云端信息成功." >> ${AUTOUPDATE_LOG}
