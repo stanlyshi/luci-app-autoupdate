@@ -76,9 +76,14 @@ function firmware_info() {
 	# Openwrt内核版本
 	local kernel_patchver=$(uname -rs | awk '{print $2;}')
 	
-	# 202310011000
+	# 本地固件信息
+	# lede-18.06-x86-64-202310100000
+	LOCAL_FIRMWARE=${CURRENT_FIRMWARE}
+	# 202310100000
 	LOCAL_COMPILE_DATE=${COMPILE_DATE}
 	
+	
+	# 云端固件信息
 	local firmware_list_m="${DOWNLOAD_PATH}/firmware_list_m"
 	local firmware_list_s="${DOWNLOAD_PATH}/firmware_list_s"
 	# lede-18.06-x86-64-202310062251-uefi-bc5ccc.img.gz
@@ -112,7 +117,7 @@ function firmware_info() {
 	;;
 	esac
 	
-	# 202310011845
+	# 202310101000
 	CLOUD_COMPILE_DATE=$(echo "${CLOUD_FIRMWARE_FILENAME}" | sed "s/.*${TARGET_PROFILE}//g" | sed "s/${BOOT_TYPE}.*//g" | grep -Eo [0-9]+)
 	CLOUD_FIRMWARE=$(echo ${CLOUD_FIRMWARE_FILENAME} | sed "s/\(.*\)-${BOOT_TYPE}.*/\1/")
 	if [[ -n "${CLOUD_FIRMWARE_FILENAME}" ]] && [[ -n "${CLOUD_COMPILE_DATE}" ]] && [[ -n "${CLOUD_FIRMWARE}" ]]; then
@@ -129,6 +134,7 @@ function firmware_info() {
 	cat > ${AUTOUPDATE_INFO} <<-EOF
 	LOCAL_COMPILE_DATE=${LOCAL_COMPILE_DATE}
 	CLOUD_COMPILE_DATE=${CLOUD_COMPILE_DATE}
+	LOCAL_FIRMWARE=${LOCAL_FIRMWARE}
 	CLOUD_FIRMWARE=${CLOUD_FIRMWARE}
 	CPU_INFO=${CPU_INFO}
 	KERNEL_LUCI=${kernel_patchver}-${LUCI_EDITION}
