@@ -82,7 +82,6 @@ function firmware_info() {
 	# 202310100000
 	LOCAL_COMPILE_DATE=${COMPILE_DATE}
 	
-	
 	# 云端固件信息
 	local firmware_list_m="${DOWNLOAD_PATH}/firmware_list_m"
 	local firmware_list_s="${DOWNLOAD_PATH}/firmware_list_s"
