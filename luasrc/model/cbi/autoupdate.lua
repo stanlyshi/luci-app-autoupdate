@@ -6,7 +6,6 @@ s=m:section(TypedSection,"login","")
 s.anonymous=true
 s.addremove=false
 
-
 o = s:option(Flag, "enable", translate("Enable AutoUpdate"),translate("Automatically update firmware during the specified time"))
 o.default = 0
 o.optional = false
